@@ -22,6 +22,7 @@ class Food:
         self.create_food()
     
     def create_food(self):
+        tim.hideturtle()
         tim.penup()
         tim.color('red')
         self.food_pos=self.rand_pos()
@@ -34,7 +35,7 @@ class Food:
 
     def rand_pos(self):
         x=random.randint(-14,14)*20
-        y=random.randint(-14,14)*20
+        y=random.randint(-14,13)*20
         return (x,y)
         
     

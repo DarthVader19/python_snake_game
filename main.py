@@ -60,36 +60,49 @@
 import time
 from snake import Snake
 from food import Food
+from scoreboard import Scoreboard
 from turtle import Screen
+import random
 
+SPEED=0.14  #in seconds 
 
+COLOR=['blue','orange','white','cyan','green','violet']
 screen=Screen()
-
 def game():
     game_on=True
     
     my_snake=Snake()
     my_food=Food()
+    score=Scoreboard()
+
     
 
     while game_on:
-        
+        score.welcome(random.choice(COLOR))
         my_snake.move()
-        time.sleep(0.2)
-        print(my_snake.snake_pos, my_food.food_pos)
+        time.sleep(SPEED)
+        # print(my_snake.snake_pos, my_food.food_pos)
         if my_food.food_pos==my_snake.snake_pos:
             my_snake.snake_len +=1
             my_food.hide_food()
             my_food.create_food()
-            
+            score.update_score()
             my_snake.increase_snake()
 
         my_snake.turn()
         # my_snake.boundary_teleport()
         game_on=my_snake.boundary_wall()
 
+        for seg  in my_snake.segments[1:]:
+           if my_snake.head.distance(seg)<10:
+              game_on=False
+              score.game_over()
+
     # my_snake.game_over()
-    screen.bgpic("giphy.gif")
+    score.game_over()
+
+    # detecting collision with itself
+    
     
     start_game()
 
